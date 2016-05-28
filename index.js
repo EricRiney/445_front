@@ -18,21 +18,17 @@
   var connPool = bluebird.promisifyAll(mysql.createPool(dbConfig));
   
   
-  
-  
-  
-  
-  
-  
-  
-  
   router
-  .get(
+  .post(
       '/445/customer',
+      koaBody,
       function *(next) {
-          var sqlGetUserIdQuery = 'select UserID FROM USERS where UserEmail = "d@d.com" limit 1';
-          var UserID = (yield connPool.queryAsync(sqlGetUserIdQuery))[0].UserID;
-          return this.body = UserID;
+          var input = this.request.body;
+          console.log(input);
+        //   var sqlGetEmployeeIdQuery = 'INSERT INTO Employee VALUES' + body.;
+        //   var EmployeeId = (yield connPool.queryAsync(sqlGetUserIdQuery))[0].UserID;
+        //   return this.body = UserID;
+        return this.body = 'god';
       }
   )
   .post(

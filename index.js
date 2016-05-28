@@ -13,7 +13,7 @@
   "host"     : "localhost",
   "user"     : "root",
   "password" : "",
-  "database" : "REST_PROJECT"
+  "database" : "SKI_BORAD_MFG"
   };
   var connPool = bluebird.promisifyAll(mysql.createPool(dbConfig));
   
@@ -27,25 +27,19 @@
   
   
   router
-  .post(
+  .get(
       '/445/customer',
-      koaBody,
       function *(next) {
-          var formData = this.request.body;
-          console.log(formData);
-          
-          //var sqlGetUserIdQuery = 'select UserID FROM USERS where UserEmail = "d@d.com" limit 1';
-          //var UserID = (yield connPool.queryAsync(sqlGetUserIdQuery))[0].UserID;
-          
-          return this.body = "hit customer";
+          var sqlGetUserIdQuery = 'select UserID FROM USERS where UserEmail = "d@d.com" limit 1';
+          var UserID = (yield connPool.queryAsync(sqlGetUserIdQuery))[0].UserID;
+          return this.body = UserID;
       }
   )
   .post(
       '/445/employee',
       koaBody,
       function *(next) {
-          var formData = this.request.body;
-          console.log(formData);
+          console.log(this.request.body);
           return this.body = "hit employee";
       }
   );

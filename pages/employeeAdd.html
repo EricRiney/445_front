@@ -1,0 +1,167 @@
+
+
+<html>
+
+<head>
+    <title>Greg</title>
+
+
+
+    <!-- load bootstrap css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- load fontawesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- load angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <!-- PROCESS FORM WITH AJAX  -->
+    <script>
+        // define angular module/app
+    angular.module('formApp', [])
+        .controller('formController', function($scope, $http) {
+            $scope.formData = {};
+            $scope.signup = function() {
+                    //POST to the server using $http.post()
+                    $http.post('/api/v1/addAccount', $scope.formData)
+                    .success(function (data, status, headers) {
+                        $scope.PostDataResponse = data;
+                    })
+                    .error(function (data, status, header) {
+                        $scope.ResponseDetails = "Data: " + data +
+                            "<hr />status: " + status +
+                            "<hr />headers: " + header;
+                    });
+                    $http.post('/api/v1/user/accounts', $scope.formData)
+                    .success(function (data, status, headers) {
+                        console.log(data);
+                        
+                        var temp = document.getElementById("dick");
+                        var meow = "";
+                        for (var i = 0; i < data.length; i++) {
+                            meow += "<p>";
+                            meow += "<br> Balance: " + data[i].AccountBalance;
+                            meow += "<br> Account ID: " + data[i].AccountID;
+                            meow += "<br> Account Name: " + data[i].AccountName;
+                            meow += "<br> Account Type: " + data[i].AccountType;
+                            meow +="</p>";
+                        } 
+                        temp.innerHTML = meow;
+                    })
+                    .error(function (data, status, header) {
+                        console.log("failed");
+                    });
+      
+            };
+            
+        });
+    </script>
+
+    <style>
+        body {
+            padding-top: 80px;
+        }
+    </style>
+</head>
+
+<!-- apply the module and controller to our body so angular is applied to that -->
+
+<body ng-app="formApp" ng-controller="formController">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../index.html">
+                Pass the Class</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm">
+                        About</a>
+                    </li>
+                    <li>
+                        <a href="#">Services</a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/in/ericriner">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <div class="container">
+        <div class="col-sm-6 col-sm-offset-3">
+
+            <h1><span class="fa fa-sign-in"></span> Add Employee</h1>
+
+            <p class="alert alert-danger" ng-if="errorMessage">{{errorMessage}}</p>
+
+            <!-- LOGIN FORM -->
+            <form name="signupForm" ng-submit="signup()" novalidate>
+                <div class="form-group">
+                    <label>Employee First Name:</label>
+                    <input name="email" class="form-control" placeholder="First Name" ng-model="formData.employeeFirstName" required>
+                </div>
+              <div class="form-group">
+                    <label>Employee Last Name:</label>
+                    <input name="email" class="form-control" placeholder="Last Name" ng-model="formData.employeeLastName" required>
+                </div>
+
+               <div class="form-group">
+                    <label>Employee Phone:</label>
+                    <input name="email" class="form-control" placeholder="Position" ng-model="formData.employeePhone" required>
+                </div>
+                
+                              <div class="form-group">
+                    <label>Employee Email:</label>
+                    <input name="email" class="form-control" placeholder="Email" ng-model="formData.employeeEmail" required>
+                </div>
+
+
+
+                <!-- SHOW DATA FROM INPUTS AS THEY ARE BEING TYPED   -->
+                <pre>
+        {{formData}}
+        </pre>
+
+                <button type="submit" class="btn btn-info">
+                    Add Employee
+                </button>
+                <!--<a href="/pages/accountShow.html" button type="button" class="btn btn-info">
+                    Account Info
+                </a>
+                <a href="/pages/accountRemove.html" button type="button" class="btn btn-info">
+                    Account Remove
+                </a>
+                  <a href="/pages/accountTransfer.html" button type="button" class="btn btn-info">
+            Account Transfer
+            </a>-->
+
+                <div id="dick">
+
+                </div>
+
+
+            </form>
+        </div>
+
+    </div>
+</body>
+
+</html>

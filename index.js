@@ -25,6 +25,11 @@
       function *(next) {
           var input = this.request.body;
           console.log(input);
+      var getStuff = "INSERT INTO Customer(CustomerName, CustomerStreet, CustomerCity, CustomerStateProvience, CustomerCountry, CustomerZIP) VALUES('" + input.customerName +"','"+ input.customerStreet +"','"+ input.customerCity +"','"+ input.customerStreet +"','"+ input.customerCountry +"','"+ input.customerZIP + "')";
+          
+          //var getStuff = "INSERT INTO Customer(CustomerName, CustomerStreet, CustomerCity, CustomerStateProvience, CustomerCountry, CustomerZIP) VALUES('meos', 'adsvsd', 'yheref', 'sdfsdf', 'sdfsdf', 'sddsc')";
+          
+          connPool.queryAsync(getStuff);
         //   var sqlGetEmployeeIdQuery = 'INSERT INTO Employee VALUES' + body.;
         //   var EmployeeId = (yield connPool.queryAsync(sqlGetUserIdQuery))[0].UserID;
         //   return this.body = UserID;
@@ -35,7 +40,13 @@
       '/445/employee',
       koaBody,
       function *(next) {
-          console.log(this.request.body);
+          var input = this.request.body;
+          console.log(input);
+      var getStuff = "INSERT INTO Employeee(EmployeeeFirst, EmployeeeLast, EmployeeePhone, EmployeeeEmail) VALUES('" + input.employeeFirstName +"','"+ input.employeeLastName +"','"+ input.employeePhone +"','"+ input.employeeEmail +"')";
+          
+          //var getStuff = "INSERT INTO Customer(CustomerName, CustomerStreet, CustomerCity, CustomerStateProvience, CustomerCountry, CustomerZIP) VALUES('meos', 'adsvsd', 'yheref', 'sdfsdf', 'sdfsdf', 'sddsc')";
+          
+          connPool.queryAsync(getStuff);
           return this.body = "hit employee";
       }
   );
